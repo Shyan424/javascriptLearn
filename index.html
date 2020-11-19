@@ -8,6 +8,7 @@
 </head>
 <body>
     <article class="task_container">
+        <button type="button" class="btn_empty">清空</button>
         <h1 class="title1">任務管理</h1>
       
         <div class="task_add_block">
@@ -27,41 +28,10 @@
     <!-- 載入 Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
     <script>
-        
-        $(".task_add").on("click", function() {
-            if($("input.task_name").val() == "") {
-                alert("請輸入文字")
-            } 
-            if($("input.task_name").val() != ""){
-                $(".task_list").append(`<li>
-                <div class="item_flex">
-                <div class="left_block">
-                    <div class="btn_flex">
-                    <button type="button" class="btn_up">往上</button>
-                    <button type="button" class="btn_down">往下</button>
-                    </div>
-                </div>
-                <div class="middle_block">
-                    <div class="star_block">
-                    <span class="star" data-star="1"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="2"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="3"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="4"><i class="fas fa-star"></i></span>
-                    <span class="star" data-star="5"><i class="fas fa-star"></i></span>
-                    </div>
-                    <p class="para">${$("input.task_name").val()}</p>
-                </div>
-                <div class="right_block">
-                    <div class="btn_flex">
-                    <button type="button" class="btn_update">更新</button>
-                    <button type="button" class="btn_delete">移除</button>
-                    </div>
-                </div>
-                </div>
-            </li>`)
-            }
-        })
-        
+       $(document).on("click", "button.btn_up", function(e) {
+           $(e.target).closest("li").prev("li").prepend($(e.target));
+
+       });
     </script>
 </body>
 </html>
