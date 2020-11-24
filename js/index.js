@@ -7,7 +7,7 @@ $("input.task_name").on("blur", function() {
 
 $("button.task_add").on("click", function() {
     addTask();
-})
+});
 $("input.task_name").on("keydown", function(e) {
     if(e.which == 13) {
         addTask();
@@ -17,33 +17,32 @@ $("input.task_name").on("keydown", function(e) {
 // 清空跟刪除欄位
 $(document).on("click", "button.btn_delete", function(e) {
     console.log(e);
-    $(e.target).closest("li").slideUp(1000, function() {
-        console.log(this);
-        $(this).remove();
-    });
+    if(confirm("確定嗎??")) {
+        $(e.target).closest("li").slideUp(1000, function() {
+            console.log(this);
+            $(this).remove();
+        });
+    }
 });
 
 $("button.btn_empty").on("click", function() {
-    $("ul.task_list").find("li").slideUp(1000, function() {
-        $(this).remove();
-    });
-})
+    if(confirm("確定嗎??")) {
+        $("ul.task_list").find("li").slideUp(1000, function() {
+                $(this).remove();
+        });
+    }
+
+});
 // 更新欄位內文字
 $(document).on("click", "button.btn_update", function(e) {
     let pTag = $(e.target).parents("div").eq(2).find("p");
     let pInput = $(e.target).parents("div").eq(2).find("input");
     let pText = pTag.text();
-    console.log($(e.target).parents("div"));
-    console.log(pTag);
+    console.log(this)
     if(pTag.text() != "") {
-        pTag.html(`<input type="text" class="task_name" placeholder="輸入待辦事項…" value="${pText}">`)
-    }else if($(e.target).parents("div").eq(2).find("input").val() != "") {
+        pTag.html(`<input type="text" class="task_name_update -none" placeholder="輸入待辦事項…" value="${pText}">`)
+    }else if(pInput.val() != "") {
         let newText = pInput.val().trim();
-        $(pInput).on("keydown", function(e) {
-            if(e.which == 13) {
-                $(this).closest("p").html(newText);
-            }
-        });
         pTag.html(newText);
     } else {
         alert("請輸入代辦事項");
@@ -83,8 +82,27 @@ function addTask() {
                         </div>
                     </div>
                 </li>`
-            )
+            );
             $("input.task_name").val("");
         
     }
 }
+// 改變位置
+$(document).on("click", "button.btn_up", function(e) {
+    $(e.target).closest("li").prev("li").before($(e.target).closest("li"));
+});
+
+$(document).on("click", "button.btn_down", function(e) {
+    $(e.target).closest("li").next("li").after($(e.target).closest("li"));
+});
+// 星號變色
+$(document).on("click", "span.star", "span.star.-on", function(e) {
+    if(!$(this).hasClass("-on")) {
+        console.log(this);
+        $(this).prevAll().addClass("-on");
+        $(this).addClass("-on");
+    }
+    if($(this).hasClass("-on")) {
+        $(this).nextAll().removeClass("-on");
+    }
+});
