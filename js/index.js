@@ -89,11 +89,15 @@ function addTask() {
 }
 // 改變位置
 $(document).on("click", "button.btn_up", function(e) {
-    $(e.target).closest("li").prev("li").before($(e.target).closest("li"));
+    if(!$(this).closest("li").is(":first-child")) {
+        $(e.target).closest("li").prev("li").before($(e.target).closest("li"));
+    }
 });
 
 $(document).on("click", "button.btn_down", function(e) {
-    $(e.target).closest("li").next("li").after($(e.target).closest("li"));
+    if(!$(this).closest("li").is(":last-child")) {
+        $(e.target).closest("li").next("li").after($(e.target).closest("li"));
+    }
 });
 // 星號變色
 $(document).on("click", "span.star", "span.star.-on", function(e) {
